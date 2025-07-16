@@ -6,12 +6,82 @@
 //
 
 import SwiftUI
+import UIKit
+import PhotosUI
 
 struct scanTab: View {
+    
+    @State private var selectedPhoto: PhotosPickerItem?
+    @State private var selectedImage: UIImage?
+    @State private var showingCamera = false
+    @State private var navigateToConfirmation = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack {
+                if let selectedImage = selectedImage {
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 300)
+                        .cornerRadius(25)
+                } else {
+                    Text("No image selected.")
+                        .foregroundStyle(.gray)
+                        .padding()
+                }
+                
+                Button("Take Photo") {
+                    showingCamera = true
+                }
+                .font(.headline)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.yellow)
+                .foregroundColor(.black)
+                .cornerRadius(25)
+                .sheet(isPresented: $showingCamera) {
+                    CameraView(image: $selectedImage)
+                        .onDisappear {
+                            if selectedImage != nil {
+                                navigateToConfirmation = true
+                            }
+                        }
+                }
+                
+                PhotosPicker(
+                    selection: $selectedPhoto,
+                    matching: .images,
+                    photoLibrary: .shared()
+                ) {
+                    Text("Select Photo")
+                        .font(.headline)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.purple)
+                        .foregroundColor(.white)
+                        .cornerRadius(25)
+                }
+                .onChange(of: selectedPhoto) {
+                    Task {
+                        if let data = try? await selectedPhoto?.loadTransferable(type: Data.self),
+                           let image = UIImage(data: data) {
+                            selectedImage = image
+                            navigateToConfirmation = true
+                        }
+                    }
+                }
+            }
+            .padding()
+            .navigationDestination(isPresented: $navigateToConfirmation) {
+                ScanConfirmation(image: selectedImage)
+            }
+        }
     }
 }
+
+
+
 
 #Preview {
     scanTab()
