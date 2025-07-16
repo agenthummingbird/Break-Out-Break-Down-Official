@@ -1,5 +1,5 @@
 //
-//  infoTab.swift
+//  InfoTab.swift
 //  Break Out Break Down Official
 //
 //  Created by 46GOParticipant on 7/11/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct infoTab: View {
+struct InfoTab: View {
     var body: some View {
         VStack{
             Text("Skin Condition Information:")
@@ -16,14 +16,15 @@ struct infoTab: View {
             DiseaseInfoBlock(name: "Eczema", info: "Itchy and dry spots on the skin which ...", sourceURL: "example.com", imageName: "examplePhoto")
             DiseaseInfoBlock(name: "Rosacea", info: "Pink patches on the skin...", sourceURL: "example.com", imageName: "examplePhoto")
             DiseaseInfoBlock(name: "Blackheads", info: "Oxidized black pimples on the skin...", sourceURL: "example.com", imageName: "examplePhoto")
+            Spacer()
         }
         .padding()
-        Spacer()
+        
     }
 }
 
 #Preview {
-    infoTab()
+    InfoTab()
 }
 
 // Creates a reusable drop down tab that can be copy and pasted in a VStack to construct a information page

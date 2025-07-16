@@ -7,25 +7,25 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct BreakoutBreakdownView: View {
     var body: some View {
         TabView { // NAVIGATION BAR
-            homeTab()
+            HomeTab()
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Home")
                 }
-            scanTab()
+            ScanTab()
                 .tabItem {
                     Image(systemName: "camera.fill")
                     Text("Scan")
                 }
-            historyTab()
+            HistoryTab()
                 .tabItem {
                     Image(systemName: "text.document.fill")
                     Text("History")
                 }
-            infoTab()
+            InfoTab()
                 .tabItem {
                     Image(systemName: "info.square.fill")
                     Text("Information")
@@ -35,5 +35,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    BreakoutBreakdownView()
 }

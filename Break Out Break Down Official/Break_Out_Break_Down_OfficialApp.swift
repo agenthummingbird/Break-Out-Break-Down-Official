@@ -11,7 +11,7 @@ import SwiftUI
 struct Break_Out_Break_Down_OfficialApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            BreakoutBreakdownView()
         }
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 import PhotosUI
 
-struct scanTab: View {
+struct ScanTab: View {
     
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var selectedImage: UIImage?
@@ -84,5 +84,5 @@ struct scanTab: View {
 
 
 #Preview {
-    scanTab()
+    ScanTab()
 }
