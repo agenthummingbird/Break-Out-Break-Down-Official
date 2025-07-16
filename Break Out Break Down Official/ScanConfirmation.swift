@@ -70,6 +70,7 @@ struct ScanConfirmation: View {
         .navigationDestination(isPresented: $navigateToResults) {
             ScanResults(image: image)
         }
+        
     }
 }
 

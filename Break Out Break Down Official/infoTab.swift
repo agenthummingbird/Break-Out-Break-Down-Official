@@ -17,6 +17,8 @@ struct infoTab: View {
             DiseaseInfoBlock(name: "Rosacea", info: "Pink patches on the skin...", sourceURL: "example.com", imageName: "examplePhoto")
             DiseaseInfoBlock(name: "Blackheads", info: "Oxidized black pimples on the skin...", sourceURL: "example.com", imageName: "examplePhoto")
         }
+        .padding()
+        Spacer()
     }
 }
 
