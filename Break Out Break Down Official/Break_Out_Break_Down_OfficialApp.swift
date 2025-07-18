@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Break_Out_Break_Down_OfficialApp: App {
@@ -13,5 +14,7 @@ struct Break_Out_Break_Down_OfficialApp: App {
         WindowGroup {
             BreakoutBreakdownView()
         }
+        //storing saved photo data to have access in the history tab (environment)
+        .modelContainer(for: SavedPhoto.self)
     }
 }

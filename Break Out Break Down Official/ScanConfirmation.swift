@@ -31,7 +31,7 @@ struct ScanConfirmation: View {
                     .padding(.top, 40)
             }
 
-            Text("Do you want to save this photo to your history?")
+            Text("Do you want to use this photo?")
                 .font(.title2)
                 .fontWeight(.semibold)
 

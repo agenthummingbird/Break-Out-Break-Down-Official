@@ -6,10 +6,27 @@
 //
 
 import SwiftUI
+import SwiftData
 
+//this is the context? where the savedPhotos are needed
 struct HistoryTab: View {
+    //@Environment(\.modelContext) var modelContext
+    //var newSavedPhoto: UIImage
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack{
+            List {
+                
+            }
+            /*
+            .navigationTitle("History")
+            .overlay(Text("No Photos Saved"))
+            Button("Save") {
+               // guard newSavedPhoto==nil else { return }
+                
+            }*/
+        }
+        
     }
 }
 
