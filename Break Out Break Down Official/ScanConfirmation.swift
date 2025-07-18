@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ScanConfirmation: View {
-    var image: UIImage?
+    var image: UIImage? // Image passed from ScanTab
     
-    @Environment(\.dismiss) private var dismiss
-    @State private var navigateToResults = false
+    @Environment(\.dismiss) private var dismiss // Dismisses current view of ScanConfirmation and goes back to ScanTab
+    @State private var navigateToResults = false // Controls navigation to ScanResults
 
     var body: some View {
         VStack(spacing: 24) {
-            if let image = image {
+            if let image = image { // Show selected image
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
@@ -67,13 +67,12 @@ struct ScanConfirmation: View {
             Spacer()
         }
         .padding()
-        .navigationDestination(isPresented: $navigateToResults) {
+        .navigationDestination(isPresented: $navigateToResults) { // Navigation to ScanResults
             ScanResults(image: image)
         }
         
     }
 }
-
 
 
 #Preview {

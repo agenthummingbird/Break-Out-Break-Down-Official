@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BreakoutBreakdownView: View {
     var body: some View {
-        TabView { // NAVIGATION BAR
+        TabView { // Navigation bar
             HomeTab()
                 .tabItem {
                     Image(systemName: "house.fill")
