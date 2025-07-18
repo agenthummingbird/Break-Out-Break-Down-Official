@@ -11,15 +11,15 @@ import PhotosUI
 
 struct ScanTab: View {
     
-    @State private var selectedPhoto: PhotosPickerItem?
-    @State private var selectedImage: UIImage?
-    @State private var showingCamera = false
-    @State private var navigateToConfirmation = false
+    @State private var selectedPhoto: PhotosPickerItem?    // Photo selected from the library
+    @State private var selectedImage: UIImage?             // UIImage created from the selected photo
+    @State private var showingCamera = false               // Controls whether the camera sheet is presented
+    @State private var navigateToConfirmation = false      // Controls navigation to ScanConfirmation
     
     var body: some View {
         NavigationStack {
             VStack {
-                if let selectedImage = selectedImage {
+                if let selectedImage = selectedImage { // Previews selected image
                     Image(uiImage: selectedImage)
                         .resizable()
                         .scaledToFit()
@@ -31,7 +31,7 @@ struct ScanTab: View {
                         .padding()
                 }
                 
-                Button("Take Photo") {
+                Button("Take Photo") { // Take photo button
                     showingCamera = true
                 }
                 .font(.headline)
@@ -41,18 +41,18 @@ struct ScanTab: View {
                 .foregroundColor(.black)
                 .cornerRadius(25)
                 .sheet(isPresented: $showingCamera) {
-                    CameraView(image: $selectedImage)
+                    CameraView(image: $selectedImage) // Presents camera view
                         .onDisappear {
-                            if selectedImage != nil {
+                            if selectedImage != nil { // If an image was taken, navigate to ScanConfirmation
                                 navigateToConfirmation = true
                             }
                         }
                 }
                 
-                PhotosPicker(
+                PhotosPicker( // Select photo from photo library
                     selection: $selectedPhoto,
-                    matching: .images,
-                    photoLibrary: .shared()
+                    matching: .images, // Ensures only image types can be selected
+                    photoLibrary: .shared() // Access the shared photo library
                 ) {
                     Text("Select Photo")
                         .font(.headline)
@@ -66,14 +66,14 @@ struct ScanTab: View {
                     Task {
                         if let data = try? await selectedPhoto?.loadTransferable(type: Data.self),
                            let image = UIImage(data: data) {
-                            selectedImage = image
-                            navigateToConfirmation = true
+                            selectedImage = image // Set selected image
+                            navigateToConfirmation = true // Navigates to ScanConfirmation
                         }
                     }
                 }
             }
             .padding()
-            .navigationDestination(isPresented: $navigateToConfirmation) {
+            .navigationDestination(isPresented: $navigateToConfirmation) { // Navigation to ScanConfirmation Page
                 ScanConfirmation(image: selectedImage)
             }
         }
