@@ -19,18 +19,6 @@ struct ScanTab: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if let selectedImage = selectedImage { // Previews selected image
-                    Image(uiImage: selectedImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 300)
-                        .cornerRadius(25)
-                } else {
-                    Text("No image selected.")
-                        .foregroundStyle(.gray)
-                        .padding()
-                }
-                
                 Button("Take Photo") { // Take photo button
                     showingCamera = true
                 }
@@ -75,6 +63,7 @@ struct ScanTab: View {
             .padding()
             .navigationDestination(isPresented: $navigateToConfirmation) { // Navigation to ScanConfirmation Page
                 ScanConfirmation(image: selectedImage)
+                    .navigationBarBackButtonHidden(true)
             }
         }
     }

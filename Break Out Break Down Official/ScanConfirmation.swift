@@ -69,6 +69,7 @@ struct ScanConfirmation: View {
         .padding()
         .navigationDestination(isPresented: $navigateToResults) { // Navigation to ScanResults
             ScanResults(image: image)
+                .navigationBarBackButtonHidden(true)
         }
         
     }
