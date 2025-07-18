@@ -16,7 +16,7 @@ struct ScanResults: View {
     
     var body: some View {
         let scanPhoto = savePhoto(photo: image)
-        let newPhoto: SavedPhoto = SavedPhoto(photo: scanPhoto, date: Date())
+        let newPhoto: SavedPhoto = SavedPhoto(data: scanPhoto.pngData()!, date: Date())
         //let newPhoto = SavedPhoto(photo: image!, date: Date())
         
         // the ! means that it will only work if there is a photo there (I think)

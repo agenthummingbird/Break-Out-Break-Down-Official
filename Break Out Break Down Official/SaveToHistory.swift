@@ -19,7 +19,7 @@ import SwiftData
 struct SaveToHistory: View {
     
     @Environment(\.modelContext) var context
-    @Query var history: [SavedPhoto]
+    //@Query var history: [SavedPhoto] //there is a way to sort this
     @State private var changePage = false
 
     var photoToHistory: SavedPhoto?
