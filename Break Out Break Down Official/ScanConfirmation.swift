@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct ScanConfirmation: View {
-    var image: UIImage? // Image passed from ScanTab
+    var image: UIImage?
     
-    @Environment(\.dismiss) private var dismiss // Dismisses current view of ScanConfirmation and goes back to ScanTab
-    @State private var navigateToResults = false // Controls navigation to ScanResults
+    @Environment(\.dismiss) private var dismiss
+
+    @Binding var selectedTab: BreakoutBreakdownView.Tab
+    @Binding var scanNavigationPath: NavigationPath
+    @Binding var showSaveSuccessMessage: Bool
 
     var body: some View {
         VStack(spacing: 24) {
-            if let image = image { // Show selected image
+            if let image = image {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
@@ -31,7 +34,7 @@ struct ScanConfirmation: View {
                     .padding(.top, 40)
             }
 
-            Text("Do you want to save this photo to your history?")
+            Text("Do you want to use this photo?")
                 .font(.title2)
                 .fontWeight(.semibold)
 
@@ -41,8 +44,7 @@ struct ScanConfirmation: View {
 
             HStack(spacing: 20) {
                 Button(action: {
-                    // navigate to results
-                    navigateToResults = true
+                    scanNavigationPath.append(ScanDestination.results(image, [])) // Push ScanResults page to NavigationStack to pass on image and ML results
                 }) {
                     Image(systemName: "checkmark")
                         .foregroundColor(.white)
@@ -52,8 +54,7 @@ struct ScanConfirmation: View {
                 }
 
                 Button(action: {
-                    // go back to scanTab
-                    dismiss()
+                    scanNavigationPath = NavigationPath() // Resets entire navigation path to return to very first screen of ScanTab
                 }) {
                     Image(systemName: "arrow.uturn.left")
                         .foregroundColor(.white)
@@ -67,15 +68,10 @@ struct ScanConfirmation: View {
             Spacer()
         }
         .padding()
-        .navigationDestination(isPresented: $navigateToResults) { // Navigation to ScanResults
-            ScanResults(image: image)
-                .navigationBarBackButtonHidden(true)
-        }
-        
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 
-
 #Preview {
-    ScanConfirmation()
+    ScanConfirmation(selectedTab: .constant(.scan), scanNavigationPath: .constant(NavigationPath()), showSaveSuccessMessage: .constant(false))
 }
