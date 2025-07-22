@@ -13,17 +13,19 @@ struct ScanResults: View {
     @State var mlResults: [PredictionResult]
     @State private var isLoading = true
     @State private var errorMessage: String?
+    
     @Binding var selectedTab: BreakoutBreakdownView.Tab
     @Binding var scanNavigationPath: NavigationPath
     @Binding var showSaveSuccessMessage: Bool
+    
     private let mlService = MLService()
+    
     var body: some View {
-        ScrollView {
-            
-            ZStack {
-                Color(hex: "59354D")
+        ZStack {
+            Color(hex: "59354D")
                     .edgesIgnoringSafeArea(.all)
-                
+            
+            ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("Scan Results")
                         .font(.largeTitle)
@@ -73,6 +75,7 @@ struct ScanResults: View {
                         Text("Top 3 Predicted Conditions:")
                             .font(.title2)
                             .bold()
+                            .foregroundColor(Color(hex: "FFF7F3"))
                         ForEach(mlResults.prefix(3), id: \.identifier) { result in
                             StatsBarView(title: result.identifier, value: result.confidence)
                         }
@@ -85,7 +88,7 @@ struct ScanResults: View {
                         } else if let topResult = mlResults.first {
                             Text("Detailed information for '\(topResult.identifier)' not available.")
                                 .font(.body)
-                                .foregroundColor(.gray)
+                                .foregroundColor(Color(hex: "FFF7F3"))
                         }
                     }
                     Button(action: {
@@ -104,18 +107,19 @@ struct ScanResults: View {
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
+                
             }
-        }
-        .navigationTitle("Results Page")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear { // Triggers ML predictions
-            if mlResults.isEmpty {
-                performPrediction()
-            } else {
-                isLoading = false
+            .navigationTitle("Results Page")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear { // Triggers ML predictions
+                if mlResults.isEmpty {
+                    performPrediction()
+                } else {
+                    isLoading = false
+                }
             }
+            .toolbar(.hidden, for: .tabBar)
         }
-        .toolbar(.hidden, for: .tabBar)
     }
     // Function to initiate ML prediction/analysis
     private func performPrediction() {
@@ -147,8 +151,9 @@ struct StatsBarView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text("\(title): \(Int(value * 100))%")
                 .font(.headline)
+                .foregroundColor(Color(hex: "FFF7F3"))
             ProgressView(value: value)
-                .progressViewStyle(LinearProgressViewStyle(tint: .purple))
+                .progressViewStyle(LinearProgressViewStyle(tint: Color(hex: "D290BB")))
                 .frame(height: 10)
                 .cornerRadius(5)
         }
@@ -163,19 +168,22 @@ struct ConditionInfoView: View {
                 Text("Your condition is most likely: \(condition.name)")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(Color(hex: "FFF7F3"))
                 Text("Read About it Below:")
+                    .foregroundColor(Color(hex: "FFF7F3"))
                 VStack(alignment: .leading, spacing: 12) {
                     Text("About:")
                         .font(.title2)
                         .fontWeight(.semibold)
+                        .foregroundStyle(Color(hex: "FFF7F3"))
                     Text(condition.info)
                         .font(.body)
+                        .foregroundColor(Color(hex: "FFF7F3"))
                 }
                 Link("Learn more from source", destination: URL(string: condition.sourceURL)!)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .font(.footnote)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(hex: "FFF7F3"))
                     .padding(.top, 16)
                 Text("Consult a healthcare provider for professional advice and treatment.")
                     .font(.footnote)

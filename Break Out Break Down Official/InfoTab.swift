@@ -9,24 +9,32 @@ import SwiftUI
 
 struct InfoTab: View {
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                Text("Skin Condition Information:")
-                    .font(.title2)
-                    .bold()
-                    .padding(.bottom, 5)
-
-                ForEach(skinConditions) { condition in // Loops through each skin condition and shows a block
-                    DiseaseInfoBlock(
-                        name: condition.name,
-                        info: condition.info,
-                        sourceURL: condition.sourceURL,
-                        imageName: condition.imageName
-                    )
+        
+        ZStack {
+            Color(hex: "59354D")
+                .edgesIgnoringSafeArea(.all)
+            
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Skin Condition Information:")
+                        .font(.title2)
+                        .bold()
+                        .padding(.bottom, 5)
+                        .foregroundColor(Color(hex: "FFF7F3"))
+                    
+                    ForEach(skinConditions) { condition in // Loops through each skin condition and shows a block
+                        DiseaseInfoBlock(
+                            name: condition.name,
+                            info: condition.info,
+                            sourceURL: condition.sourceURL,
+                            imageName: condition.imageName
+                        )
+                        .accentColor(Color(hex: "D290BB"))
+                    }
+                    Spacer()
                 }
-                Spacer()
+                .padding()
             }
-            .padding()
         }
     }
 }
@@ -76,8 +84,8 @@ let skinConditions: [SkinCondition] = [
         recommendedProducts: ["Neutrogena T/Gel Therapeutic Shampoo", "CeraVe SA Cream for Rough & Bumpy Skin", "Dermarest Psoriasis Medicated Shampoo Plus Conditioner"]
     ),
     SkinCondition(name: "Milia",
-                  info: "Milia is...",
-                  sourceURL: "",
+                  info: "Milia (milk spots) are small, white cysts on your skin. Cysts are filled pockets under the surface of your skin. The most common place to find milia are on your face. Milia are harmless and only affect your appearance.",
+                  sourceURL: "https://my.clevelandclinic.org/health/diseases/17868-milia",
                   imageName: "Milia",
                   ingredientsToLookFor: [""],
                   recommendedProducts: [""]
@@ -103,16 +111,18 @@ struct DiseaseInfoBlock: View { // Creates a reusable drop down tab that can be 
                     Text(info)
                         .font(.system(size: 12))
                         .frame(width: 200, alignment: .leading)
+                        .foregroundColor(Color(hex: "FFF7F3"))
                 }
                 Link("Learn more", destination: URL(string: sourceURL)!) // Link is a control for navigating to a URL - makes URLs clickable
                     .frame(maxWidth: .infinity, alignment: .center)
                     .font(.footnote)
-                    .foregroundColor(.blue)
+                    .foregroundColor(Color(hex: "D290BB"))
                     .padding(.top, 5)
             }
             .padding(.top, 5)
         }
         .padding(.horizontal, 10)
+        .foregroundColor(Color(hex: "D290BB"))
     }
 }
 
