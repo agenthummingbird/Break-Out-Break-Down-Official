@@ -17,7 +17,6 @@ struct ScanConfirmation: View {
     @Binding var showSaveSuccessMessage: Bool
 
     var body: some View {
-        
         ZStack {
             Color(hex: "59354D")
                     .edgesIgnoringSafeArea(.all)

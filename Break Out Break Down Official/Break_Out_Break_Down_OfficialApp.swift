@@ -14,12 +14,12 @@ struct Break_Out_Break_Down_OfficialApp: App {
     init() { // Initializer - configuration that affects entire app's UI
         let tabBarAppearance = UITabBarAppearance() // Create object to customize visuals of tab bar
         tabBarAppearance.configureWithOpaqueBackground()
-        tabBarAppearance.backgroundColor = UIColor.systemGray6
+        tabBarAppearance.backgroundColor = UIColor(red: 0.45, green: 0.27, blue: 0.39, alpha: 1.00)
         
-        tabBarAppearance.stackedLayoutAppearance.selected.iconColor = UIColor.purple
-        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.purple]
-        tabBarAppearance.stackedLayoutAppearance.normal.iconColor = UIColor.gray
-        tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.gray]
+        tabBarAppearance.stackedLayoutAppearance.selected.iconColor = UIColor(red: 1.00, green: 0.97, blue: 0.95, alpha: 1.00)
+        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(red: 1.00, green: 0.97, blue: 0.95, alpha: 1.00)]
+        tabBarAppearance.stackedLayoutAppearance.normal.iconColor = UIColor(red: 0.82, green: 0.56, blue: 0.73, alpha: 1.00)
+        tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor(red: 0.82, green: 0.56, blue: 0.73, alpha: 1.00)]
 
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance

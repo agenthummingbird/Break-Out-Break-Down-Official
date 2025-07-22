@@ -83,12 +83,13 @@ let skinConditions: [SkinCondition] = [
         ingredientsToLookFor: ["Coal Tar", "Salicylic Acid", "Corticosteroids", "Vitamin D Analogues", "Urea"],
         recommendedProducts: ["Neutrogena T/Gel Therapeutic Shampoo", "CeraVe SA Cream for Rough & Bumpy Skin", "Dermarest Psoriasis Medicated Shampoo Plus Conditioner"]
     ),
-    SkinCondition(name: "Milia",
-                  info: "Milia (milk spots) are small, white cysts on your skin. Cysts are filled pockets under the surface of your skin. The most common place to find milia are on your face. Milia are harmless and only affect your appearance.",
-                  sourceURL: "https://my.clevelandclinic.org/health/diseases/17868-milia",
-                  imageName: "Milia",
-                  ingredientsToLookFor: [""],
-                  recommendedProducts: [""]
+    SkinCondition(
+        name: "Milia",
+        info: "Milia (milk spots) are small, white cysts on your skin. Cysts are filled pockets under the surface of your skin. The most common place to find milia are on your face. Milia are harmless and only affect your appearance.",
+        sourceURL: "https://my.clevelandclinic.org/health/diseases/17868-milia",
+        imageName: "Milia",
+        ingredientsToLookFor: [""],
+        recommendedProducts: [""]
     )
 ]
 
