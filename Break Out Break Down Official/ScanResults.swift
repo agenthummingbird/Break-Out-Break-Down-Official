@@ -19,85 +19,92 @@ struct ScanResults: View {
     private let mlService = MLService()
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Scan Results")
-                    .font(.largeTitle)
-                    .bold()
-                    .padding(.bottom, 10)
-                if isLoading {
-                    ProgressView("Analyzing image...")
-                        .font(.title2)
-                        .padding()
-                } else if let errorMessage = errorMessage {
-                    VStack {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.red)
-                        Text("Error: \(errorMessage)")
-                            .foregroundColor(.red)
-                            .font(.headline)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding()
-                } else if mlResults.isEmpty {
-                    VStack {
-                        Image(systemName: "questionmark.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.orange)
-                        Text("No definitive results found. Please try another image.")
-                            .foregroundColor(.orange)
-                            .font(.headline)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding()
-                } else {
-                    if let image = image {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 200)
-                            .cornerRadius(12)
-                            .shadow(radius: 5)
-                            .padding(.bottom, 10)
-                    }
-                    Text("Top 3 Predicted Conditions:")
-                        .font(.title2)
+            
+            ZStack {
+                Color(hex: "59354D")
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Scan Results")
+                        .font(.largeTitle)
                         .bold()
-                    ForEach(mlResults.prefix(3), id: \.identifier) { result in
-                        StatsBarView(title: result.identifier, value: result.confidence)
-                    }
-                    // Information for predicted top condition
-                    if let topResult = mlResults.first,
-                       let conditionInfo = skinConditions.first(where: { $0.name == topResult.identifier }) {
-                        Divider()
-                            .padding(.vertical, 10)
-                        ConditionInfoView(condition: conditionInfo)
-                    } else if let topResult = mlResults.first {
-                        Text("Detailed information for '\(topResult.identifier)' not available.")
-                            .font(.body)
-                            .foregroundColor(.gray)
-                    }
-                }
-                Button(action: {
-                    scanNavigationPath.append(ScanDestination.ingredients(image, mlResults.first?.identifier ?? "Unknown"))
-                }) {
-                    Text("Next: Recommendations")
-                        .font(.headline)
+                        .padding(.bottom, 10)
+                        .foregroundColor(Color(hex: "FFF7F3"))
+                    if isLoading {
+                        ProgressView("Analyzing image...")
+                            .font(.title2)
+                            .padding()
+                    } else if let errorMessage = errorMessage {
+                        VStack {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.red)
+                            Text("Error: \(errorMessage)")
+                                .foregroundColor(.red)
+                                .font(.headline)
+                                .multilineTextAlignment(.center)
+                        }
                         .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(25)
+                    } else if mlResults.isEmpty {
+                        VStack {
+                            Image(systemName: "questionmark.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.orange)
+                            Text("No definitive results found. Please try another image.")
+                                .foregroundColor(.orange)
+                                .font(.headline)
+                                .multilineTextAlignment(.center)
+                        }
+                        .padding()
+                    } else {
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 200)
+                                .cornerRadius(12)
+                                .shadow(radius: 5)
+                                .padding(.bottom, 10)
+                        }
+                        Text("Top 3 Predicted Conditions:")
+                            .font(.title2)
+                            .bold()
+                        ForEach(mlResults.prefix(3), id: \.identifier) { result in
+                            StatsBarView(title: result.identifier, value: result.confidence)
+                        }
+                        // Information for predicted top condition
+                        if let topResult = mlResults.first,
+                           let conditionInfo = skinConditions.first(where: { $0.name == topResult.identifier }) {
+                            Divider()
+                                .padding(.vertical, 10)
+                            ConditionInfoView(condition: conditionInfo)
+                        } else if let topResult = mlResults.first {
+                            Text("Detailed information for '\(topResult.identifier)' not available.")
+                                .font(.body)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    Button(action: {
+                        scanNavigationPath.append(ScanDestination.ingredients(image, mlResults.first?.identifier ?? "Unknown"))
+                    }) {
+                        Text("Next: Recommendations")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .cornerRadius(25)
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 20)
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 20)
+                .padding()
+                .frame(maxWidth: .infinity)
             }
-            .padding()
-            .frame(maxWidth: .infinity)
         }
         .navigationTitle("Results Page")
         .navigationBarTitleDisplayMode(.inline)
@@ -178,7 +185,7 @@ struct ConditionInfoView: View {
             .padding()
         }
         .navigationTitle("\(condition.name) Info")
-        .background(Color(UIColor.systemBackground))
+        .background(Color(hex: "59354D"))
     }
 }
 #Preview {

@@ -12,7 +12,7 @@ class MLService {
     private var model: SkinDiseaseImageClassifier? // Holds ML model
     init() {
         do {
-            // Instantiate your specific model
+            // Instantiate ML Model
             self.model = try SkinDiseaseImageClassifier(configuration: MLModelConfiguration())
         } catch {
             print("Error initializing Core ML model: \(error)")

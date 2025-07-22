@@ -21,58 +21,70 @@ struct ScanTab: View {
 
     var body: some View {
         NavigationStack(path: $scanNavigationPath) {
-            VStack {
-                Button("Take Photo") {
-                    showingCamera = true
-                }
-                .font(.headline)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.yellow)
-                .foregroundColor(.black)
-                .cornerRadius(25)
-                .sheet(isPresented: $showingCamera) {
-                    CameraView(image: $selectedImage)
-                        .onDisappear {
-                            if let image = selectedImage {
+            
+            ZStack {
+                Color(hex: "59354D")
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack {
+                    Text("Scan your skin:")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.bottom, 20)
+                        .foregroundColor(Color(hex: "FFF7F3"))
+                    
+                    Button("Take Photo") {
+                        showingCamera = true
+                    }
+                    .font(.headline)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color(hex: "D290BB"))
+                    .foregroundColor(.white)
+                    .cornerRadius(25)
+                    .sheet(isPresented: $showingCamera) {
+                        CameraView(image: $selectedImage)
+                            .onDisappear {
+                                if let image = selectedImage {
+                                    scanNavigationPath.append(ScanDestination.confirmation(image))
+                                }
+                            }
+                    }
+                    
+                    PhotosPicker(
+                        selection: $selectedPhoto,
+                        matching: .images,
+                        photoLibrary: .shared()
+                    ) {
+                        Text("Select Photo")
+                            .font(.headline)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color(hex: "F6A9A9"))
+                            .foregroundColor(.white)
+                            .cornerRadius(25)
+                    }
+                    .onChange(of: selectedPhoto) {
+                        Task {
+                            if let data = try? await selectedPhoto?.loadTransferable(type: Data.self),
+                               let image = UIImage(data: data) {
+                                selectedImage = image
                                 scanNavigationPath.append(ScanDestination.confirmation(image))
                             }
                         }
-                }
-
-                PhotosPicker(
-                    selection: $selectedPhoto,
-                    matching: .images,
-                    photoLibrary: .shared()
-                ) {
-                    Text("Select Photo")
-                        .font(.headline)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.purple)
-                        .foregroundColor(.white)
-                        .cornerRadius(25)
-                }
-                .onChange(of: selectedPhoto) {
-                    Task {
-                        if let data = try? await selectedPhoto?.loadTransferable(type: Data.self),
-                           let image = UIImage(data: data) {
-                            selectedImage = image
-                            scanNavigationPath.append(ScanDestination.confirmation(image))
-                        }
                     }
                 }
-            }
-            .padding()
-            // Present different screens
-            .navigationDestination(for: ScanDestination.self) { destination in
-                switch destination {
-                case .confirmation(let image):
-                    ScanConfirmation(image: image, selectedTab: $selectedTab, scanNavigationPath: $scanNavigationPath, showSaveSuccessMessage: $showSaveSuccessMessage)
-                case .results(let image, let mlResults):
-                    ScanResults(image: image, mlResults: mlResults, selectedTab: $selectedTab, scanNavigationPath: $scanNavigationPath, showSaveSuccessMessage: $showSaveSuccessMessage)
-                case .ingredients(let image, let predictedConditionName):
-                    IngredientsProducts(image: image, predictedConditionName: predictedConditionName, selectedTab: $selectedTab, scanNavigationPath: $scanNavigationPath, showSaveSuccessMessage: $showSaveSuccessMessage)
+                .padding()
+                // Present different screens
+                .navigationDestination(for: ScanDestination.self) { destination in
+                    switch destination {
+                    case .confirmation(let image):
+                        ScanConfirmation(image: image, selectedTab: $selectedTab, scanNavigationPath: $scanNavigationPath, showSaveSuccessMessage: $showSaveSuccessMessage)
+                    case .results(let image, let mlResults):
+                        ScanResults(image: image, mlResults: mlResults, selectedTab: $selectedTab, scanNavigationPath: $scanNavigationPath, showSaveSuccessMessage: $showSaveSuccessMessage)
+                    case .ingredients(let image, let predictedConditionName):
+                        IngredientsProducts(image: image, predictedConditionName: predictedConditionName, selectedTab: $selectedTab, scanNavigationPath: $scanNavigationPath, showSaveSuccessMessage: $showSaveSuccessMessage)
+                    }
                 }
             }
         }
@@ -124,6 +136,7 @@ enum ScanDestination: Hashable { // Types pushed into NavigationPath must confir
         }
     }
 }
+
 
 #Preview {
     ScanTab(selectedTab: .constant(.scan), showSaveSuccessMessage: .constant(false))

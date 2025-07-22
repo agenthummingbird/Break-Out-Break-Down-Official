@@ -74,6 +74,13 @@ let skinConditions: [SkinCondition] = [
         imageName: "Psoriasis",
         ingredientsToLookFor: ["Coal Tar", "Salicylic Acid", "Corticosteroids", "Vitamin D Analogues", "Urea"],
         recommendedProducts: ["Neutrogena T/Gel Therapeutic Shampoo", "CeraVe SA Cream for Rough & Bumpy Skin", "Dermarest Psoriasis Medicated Shampoo Plus Conditioner"]
+    ),
+    SkinCondition(name: "Milia",
+                  info: "Milia is...",
+                  sourceURL: "",
+                  imageName: "Milia",
+                  ingredientsToLookFor: [""],
+                  recommendedProducts: [""]
     )
 ]
 
