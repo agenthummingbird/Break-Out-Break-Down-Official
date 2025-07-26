@@ -52,8 +52,8 @@ struct SkinCondition: Identifiable {
 
 let skinConditions: [SkinCondition] = [
     SkinCondition(
-        name: "Eczema",
-        info: "Eczema is a condition that causes your skin to become dry, itchy and bumpy. This condition weakens your skin’s barrier function, which is responsible for helping your skin retain moisture and protecting your body from outside elements.",
+        name: "Atopic Dermatitis",
+        info: "Atopic Dermatitis is a condition that causes your skin to become dry, itchy and bumpy. This condition weakens your skin’s barrier function, which is responsible for helping your skin retain moisture and protecting your body from outside elements.",
         sourceURL: "https://my.clevelandclinic.org/health/diseases/9998-eczema",
         imageName: "Eczema",
         ingredientsToLookFor: ["Ceramides", "Hyaluronic Acid", "Colloidal Oatmeal", "Niacinamide", "Shea Butter"],

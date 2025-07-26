@@ -73,12 +73,16 @@ struct ScanResults: View {
                                 .padding(.bottom, 10)
                         }
                         Text("Top 3 Predicted Conditions:")
-                            .font(.title2)
+                            .font(.title)
                             .bold()
                             .foregroundColor(Color(hex: "FFF7F3"))
-                        ForEach(mlResults.prefix(3), id: \.identifier) { result in
-                            StatsBarView(title: result.identifier, value: result.confidence)
-                        }
+                        
+                        //Colors are individual to each stats bar
+                        let result = mlResults.prefix(3)
+                        StatsBarView(title: result[0].identifier, value: result[0].confidence, hexColor: "D290BB")
+                        StatsBarView(title: result[1].identifier, value: result[1].confidence, hexColor: "F6a9a9")
+                        StatsBarView(title: result[2].identifier, value: result[2].confidence, hexColor: "FFCABA")
+                        
                         // Information for predicted top condition
                         if let topResult = mlResults.first,
                            let conditionInfo = skinConditions.first(where: { $0.name == topResult.identifier }) {
@@ -98,7 +102,7 @@ struct ScanResults: View {
                             .font(.headline)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(Color.green)
+                            .background(Color(hex: "D290BB"))
                             .foregroundColor(.white)
                             .cornerRadius(25)
                     }
@@ -147,17 +151,20 @@ struct ScanResults: View {
 struct StatsBarView: View {
     var title: String
     var value: Double
+    var hexColor: String
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text("\(title): \(Int(value * 100))%")
                 .font(.headline)
                 .foregroundColor(Color(hex: "FFF7F3"))
+                .frame(height: 30)
             ProgressView(value: value)
-                .progressViewStyle(LinearProgressViewStyle(tint: Color(hex: "D290BB")))
+                .scaleEffect(x: 1, y: 3)
+                .progressViewStyle(LinearProgressViewStyle(tint: Color(hex:"\(hexColor)")))
                 .frame(height: 10)
                 .cornerRadius(5)
         }
-        .padding(.vertical, 6)
+        .padding(.vertical, 3)
     }
 }
 struct ConditionInfoView: View {
@@ -198,7 +205,7 @@ struct ConditionInfoView: View {
 }
 #Preview {
     ScanResults(image: UIImage(named: "Eczema"),
-                mlResults: [PredictionResult(identifier: "Eczema", confidence: 0.95)],
+                mlResults: [PredictionResult(identifier: "Atopic Dermatitis", confidence: 0.58), PredictionResult(identifier: "Normal", confidence: 0.25), PredictionResult(identifier: "Psoriasis", confidence: 0.17)],
                 selectedTab: .constant(.scan),
                 scanNavigationPath: .constant(NavigationPath()),
                 showSaveSuccessMessage: .constant(false))
