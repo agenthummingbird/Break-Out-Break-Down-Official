@@ -17,58 +17,66 @@ struct ScanConfirmation: View {
     @Binding var showSaveSuccessMessage: Bool
 
     var body: some View {
-        VStack(spacing: 24) {
-            if let image = image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 200)
-                    .cornerRadius(12)
-                    .padding(.top, 40)
-            } else {
-                Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 200)
-                    .cornerRadius(12)
-                    .padding(.top, 40)
-            }
-
-            Text("Do you want to use this photo?")
-                .font(.title2)
-                .fontWeight(.semibold)
-
-            Text("Please confirm or retake the photo shown above.")
-                .font(.body)
-                .foregroundColor(.gray)
-
-            HStack(spacing: 20) {
-                Button(action: {
-                    scanNavigationPath.append(ScanDestination.results(image, [])) // Push ScanResults page to NavigationStack to pass on image and ML results
-                }) {
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.white)
-                        .frame(width: 50, height: 50)
-                        .background(Color.green)
-                        .cornerRadius(8)
+        ZStack {
+            Color(hex: "59354D")
+                    .edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 24) {
+                if let image = image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 200)
+                        .cornerRadius(12)
+                        .padding(.top, 40)
+                } else {
+                    Image(systemName: "photo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 200)
+                        .cornerRadius(12)
+                        .padding(.top, 40)
+                        .foregroundColor(Color(hex: "FFF7F3"))
                 }
-
-                Button(action: {
-                    scanNavigationPath = NavigationPath() // Resets entire navigation path to return to very first screen of ScanTab
-                }) {
-                    Image(systemName: "arrow.uturn.left")
-                        .foregroundColor(.white)
-                        .frame(width: 50, height: 50)
-                        .background(Color.red)
-                        .cornerRadius(8)
+                
+                Text("Do you want to use this photo?")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color(hex: "FFF7F3"))
+                
+                Text("Please confirm or retake the photo shown above.")
+                    .font(.body)
+                    .foregroundColor(Color(hex: "FFF7F3"))
+                    
+                
+                HStack(spacing: 20) {
+                    Button(action: {
+                        scanNavigationPath.append(ScanDestination.results(image, [])) // Push ScanResults page to NavigationStack to pass on image and ML results
+                    }) {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.white)
+                            .frame(width: 50, height: 50)
+                            .background(Color.green)
+                            .cornerRadius(8)
+                    }
+                    
+                    Button(action: {
+                        scanNavigationPath = NavigationPath() // Resets entire navigation path to return to very first screen of ScanTab
+                    }) {
+                        Image(systemName: "arrow.uturn.left")
+                            .foregroundColor(.white)
+                            .frame(width: 50, height: 50)
+                            .background(Color.red)
+                            .cornerRadius(8)
+                    }
                 }
+                .padding(.top, 32)
+                
+                Spacer()
             }
-            .padding(.top, 32)
-
-            Spacer()
+            .padding()
+            .toolbar(.hidden, for: .tabBar)
         }
-        .padding()
-        .toolbar(.hidden, for: .tabBar)
     }
 }
 

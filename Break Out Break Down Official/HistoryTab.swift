@@ -16,37 +16,49 @@ struct HistoryTab: View {
 
     var body: some View {
         NavigationStack {
-            Group {
-                if history.isEmpty {
-                    ContentUnavailableView("No Photos Saved Yet", systemImage: "photo.fill")
-                } else {
-                    List {
-                        ForEach(history) { photo in
-                            VStack(alignment: .leading) {
-                                Text(photo.date, style: .date)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                                Text("Condition: \(photo.predictedCondition)")
-                                    .font(.headline)
-                                    .padding(.bottom, 2)
-                                if let uiImage = UIImage(data: photo.data) {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 150, height: 150)
-                                        .cornerRadius(8)
-                                } else {
-                                    Text("Image not available") // Fallback if image data is bad
-                                        .foregroundColor(.red)
+            
+            ZStack {
+                Color(hex: "59354D")
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack {
+                    Text("History")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding(.top, 20)
+                        .foregroundColor(Color(hex: "FFF7F3"))
+                    
+                    if history.isEmpty {
+                        ContentUnavailableView("No Photos Saved Yet", systemImage: "photo.fill")
+                            .foregroundColor(Color(hex: "FFF7F3"))
+                    } else {
+                        List {
+                            ForEach(history) { photo in
+                                VStack(alignment: .leading) {
+                                    Text(photo.date, style: .date)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                    Text("Condition: \(photo.predictedCondition)")
+                                        .font(.headline)
+                                        .padding(.bottom, 2)
+                                    if let uiImage = UIImage(data: photo.data) {
+                                        Image(uiImage: uiImage)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 150, height: 150)
+                                            .cornerRadius(8)
+                                    } else {
+                                        Text("Image not available") // Fallback if image data is bad
+                                            .foregroundColor(.red)
+                                    }
                                 }
+                                .padding(.vertical, 5)
                             }
-                            .padding(.vertical, 5)
+                            .onDelete(perform: deleteItems) // Swipe to delete
                         }
-                        .onDelete(perform: deleteItems) // Swipe to delete
                     }
                 }
             }
-            .navigationTitle("History")
         }
     }
     
