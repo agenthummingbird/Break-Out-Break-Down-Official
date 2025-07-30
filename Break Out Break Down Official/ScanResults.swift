@@ -187,15 +187,12 @@ struct ConditionInfoView: View {
                         .font(.body)
                         .foregroundColor(Color(hex: "FFF7F3"))
                 }
-                Link("Learn more from source", destination: URL(string: condition.sourceURL)!)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .font(.footnote)
-                    .foregroundColor(Color(hex: "FFF7F3"))
-                    .padding(.top, 16)
+
                 Text("Consult a healthcare provider for professional advice and treatment.")
                     .font(.footnote)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.white)
                     .padding(.top, 16)
+                    .bold()
             }
             .padding()
         }

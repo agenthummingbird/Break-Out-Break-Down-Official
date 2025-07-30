@@ -7,7 +7,7 @@
 import Foundation
 import CoreML
 import UIKit
-import Vision
+import Vision // Helps with image processing - ensures image is right size and format for Core ML
 class MLService {
     private var model: SkinDiseaseImageClassifier? // Holds ML model
     init() {

@@ -60,12 +60,13 @@ struct IngredientsProducts: View {
                         .padding(.leading, 10)
                         
                         Divider()
-                            .padding(.vertical, 10)
+                            .padding(.vertical, 2)
+                            .overlay(Color(hex: "D290BB"))
                         
                         Text("Recommended Products:")
                             .font(.title2)
                             .fontWeight(.semibold)
-                            .padding(.top, 10)
+                            .padding(.top, 5)
                             .foregroundColor(Color(hex: "FFF7F3"))
                         
                         // Displays all recommended products associated with the detected skin condition

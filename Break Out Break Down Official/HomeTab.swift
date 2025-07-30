@@ -59,10 +59,10 @@ struct HomeTab: View {
                     VStack(alignment: .center, spacing: 5) {
                         Text("Condition: \(mostRecentPhoto.predictedCondition)")
                             .font(.headline)
-                            .foregroundColor(.primary)
+                            .foregroundColor(Color(hex: "FFF7F3"))
                         Text("Scanned on: \(mostRecentPhoto.date, style: .date) at \(mostRecentPhoto.date, style: .time)")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color(hex: "FFF7F3"))
                     }
                 } else {
                     ContentUnavailableView("No Recent Scans", systemImage: "photo.badge.plus")
